@@ -4,23 +4,24 @@ import { BsSearch } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 export const Searchbar = ({ onSubmit }) => {
   const handleSubmit = (values, actions) => {
-    if (values.search.trim() === '') {
+    console.log(values);
+    if (values.searchQuery.trim() === '') {
       toast.error('Вы ничего не ввели, пожалуйста повторите попытку');
     }
-    onSubmit(values);
+    onSubmit(values.searchQuery.toLowerCase());
     actions.resetForm();
   };
 
   return (
     <Header>
-      <Formik initialValues={{ search: '' }} onSubmit={handleSubmit}>
+      <Formik initialValues={{ searchQuery: '' }} onSubmit={handleSubmit}>
         <FormWrapper>
           <SearchBtn type="submit">
             <BsSearch />
           </SearchBtn>
 
           <FormInput
-            name="search"
+            name="searchQuery"
             type="text"
             autoComplete="off"
             autoFocus

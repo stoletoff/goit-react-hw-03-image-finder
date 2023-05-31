@@ -1,7 +1,11 @@
 import { Component } from 'react';
+import { Modal } from 'components/Modal';
 import { GalleryItem, GalleryItemImg } from './ImageGalleryItem.styled';
 export class ImageGalleryItem extends Component {
-  state = { showModal: false };
+  state = {
+    showModal: false,
+  };
+
   toggleModal = () => {
     this.setState(({ showModal }) => ({
       showModal: !showModal,
@@ -9,10 +13,19 @@ export class ImageGalleryItem extends Component {
   };
 
   render() {
-    const { image } = this.props;
-    const { showModal } = this.state;
-    <GalleryItem key={image.id}>
-      <GalleryItemImg src={image.webformatURL} alt={image.tags} />
-    </GalleryItem>;
+    const {
+      image: { webformatURL, tags, largeImageURL },
+    } = this.props;
+    return (
+      <>
+        <GalleryItem onClick={this.toggleModal}>
+          <GalleryItemImg src={webformatURL} alt={tags} />
+        </GalleryItem>
+        {this.state.showModal && (<Modal onClose={this.toggleModal}>
+          <img src={largeImageURL} alt={tags} />
+        </Modal>)}
+      </>
+    );
   }
 }
+
